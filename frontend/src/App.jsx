@@ -38,7 +38,7 @@ const App = () => {
         username,
         password,
       });
-      console.log(user);
+
       window.localStorage.setItem("loggedBlogAppUser", JSON.stringify(user));
       blogService.setToken(user.token);
       setUser(user);
@@ -130,7 +130,9 @@ const App = () => {
       ) : (
         <div>
           <p>{user.name} logged-in</p>{" "}
-          <button onClick={handleLogout}>logout</button>
+          <button id="logout-button" onClick={handleLogout}>
+            logout
+          </button>
           {blogForm()}
         </div>
       )}
@@ -138,7 +140,7 @@ const App = () => {
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
-          <Blog key={blog.id} blog={blog} setBlogs={setBlogs} />
+          <Blog key={blog.id} blog={blog} setBlogs={setBlogs} user={user} />
         ))}
     </div>
   );

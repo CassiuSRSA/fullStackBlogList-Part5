@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import blogService from "../services/blogs";
 
-const Blog = ({ blog, setBlogs }) => {
+const Blog = ({ blog, setBlogs, user }) => {
   const [expanded, setExpanded] = useState(false);
   const [likes, setLikes] = useState(blog.likes);
 
@@ -29,7 +29,6 @@ const Blog = ({ blog, setBlogs }) => {
       setBlogs((prev) => prev.filter((blog) => blog.id !== id));
       return;
     }
-    return;
   };
 
   const blogDetails = () => (
@@ -40,19 +39,26 @@ const Blog = ({ blog, setBlogs }) => {
       </a>
       <p data-testid="likes">
         Likes {likes}
-        <button onClick={handleLike}>Like</button>
+        <button id="like-button" onClick={handleLike}>
+          Like
+        </button>
       </p>
       <p>{blog.user.name}</p>
-      <button onClick={() => handleDelete(blog.id)}>Delete</button>
+
+      {user?.id === blog.user.id && (
+        <button id="delete-button" onClick={() => handleDelete(blog.id)}>
+          Delete
+        </button>
+      )}
     </>
   );
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       <p className="title">
         {blog.title} <strong className="author"> - {blog.author}</strong>
       </p>
-      <button onClick={handleExpand} data-testid="view">
+      <button id="view-button" onClick={handleExpand} data-testid="view">
         {expanded ? "hide" : "view"}
       </button>
       {expanded && blogDetails()}
