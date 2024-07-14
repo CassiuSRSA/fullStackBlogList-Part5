@@ -35,8 +35,10 @@ const Blog = ({ blog, setBlogs }) => {
   const blogDetails = () => (
     <>
       <br />
-      <a href={blog.url}>{blog.url}</a>
-      <p>
+      <a data-testid="url" href={blog.url}>
+        {blog.url}
+      </a>
+      <p data-testid="likes">
         Likes {likes}
         <button onClick={handleLike}>Like</button>
       </p>
@@ -47,8 +49,12 @@ const Blog = ({ blog, setBlogs }) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} <strong> - {blog.author}</strong>
-      <button onClick={handleExpand}>{expanded ? "hide" : "view"}</button>
+      <p className="title">
+        {blog.title} <strong className="author"> - {blog.author}</strong>
+      </p>
+      <button onClick={handleExpand} data-testid="view">
+        {expanded ? "hide" : "view"}
+      </button>
       {expanded && blogDetails()}
     </div>
   );
